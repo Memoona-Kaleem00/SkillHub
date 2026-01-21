@@ -1,0 +1,106 @@
+@model IEnumerable<SkillHub.Models.Service>
+@{
+    ViewData["Title"] = "Provider Dashboard";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1">Dashboard</h1>
+            <p class="text-muted">Welcome back! Here's what's happening with your services.</p>
+        </div>
+        <a asp-action="CreateService" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>New Service
+        </a>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary me-3">
+                            <i class="fas fa-briefcase fa-lg"></i>
+                        </div>
+                        <h6 class="card-subtitle text-muted text-uppercase mb-0">Active Services</h6>
+                    </div>
+                    <h2 class="card-title mb-0">@Model.Count()</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success bg-opacity-10 p-3 rounded-circle text-success me-3">
+                            <i class="fas fa-calendar-check fa-lg"></i>
+                        </div>
+                        <h6 class="card-subtitle text-muted text-uppercase mb-0">Total Bookings</h6>
+                    </div>
+                    <h2 class="card-title mb-0">@ViewBag.TotalBookings</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle text-warning me-3">
+                            <i class="fas fa-star fa-lg"></i>
+                        </div>
+                        <h6 class="card-subtitle text-muted text-uppercase mb-0">Average Rating</h6>
+                    </div>
+                    <h2 class="card-title mb-0">4.9</h2> <!-- Placeholder for now -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Services -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Your Services</h5>
+                <a asp-action="MyServices" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Service</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Take(5))
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-light p-2 rounded me-3">
+                                            <i class="fas fa-layer-group text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">@item.Title</div>
+                                            <small class="text-muted">@item.Description?.Substring(0, Math.Min(item.Description.Length, 30))...</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>$@item.Price</td>
+                                <td><span class="badge bg-success bg-opacity-10 text-success">Active</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-light text-muted"><i class="fas fa-ellipsis-h"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

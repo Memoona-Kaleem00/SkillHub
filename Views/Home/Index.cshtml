@@ -1,0 +1,159 @@
+@model IEnumerable<SkillHub.Models.Service>
+
+@{
+    ViewData["Title"] = "Find Services";
+
+    string GetGradient(int id) {
+        var gradients = new[] {
+            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            "linear-gradient(135deg, #2af598 0%, #009efd 100%)",
+            "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)",
+            "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+            "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
+            "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+            "linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)",
+            "linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
+        };
+        return gradients[id % gradients.Length];
+    }
+
+    string GetIcon(string title) {
+        if (string.IsNullOrEmpty(title)) return "fa-briefcase";
+        title = title.ToLower();
+        if (title.Contains("clean")) return "fa-broom";
+        if (title.Contains("electr")) return "fa-bolt";
+        if (title.Contains("plumb")) return "fa-faucet";
+        if (title.Contains("water")) return "fa-tint";
+        if (title.Contains("mech") || title.Contains("repair") || title.Contains("fix")) return "fa-wrench";
+        if (title.Contains("car") || title.Contains("auto")) return "fa-car";
+        if (title.Contains("garden") || title.Contains("lawn") || title.Contains("grass")) return "fa-leaf";
+        if (title.Contains("paint") || title.Contains("decor")) return "fa-paint-roller";
+        if (title.Contains("mov") || title.Contains("shift")) return "fa-truck";
+        if (title.Contains("teach") || title.Contains("tutor") || title.Contains("learn") || title.Contains("class")) return "fa-book-open";
+        if (title.Contains("photo") || title.Contains("camera")) return "fa-camera";
+        if (title.Contains("cook") || title.Contains("chef") || title.Contains("food")) return "fa-utensils";
+        if (title.Contains("beauty") || title.Contains("hair") || title.Contains("salon")) return "fa-spa";
+        if (title.Contains("fit") || title.Contains("gym") || title.Contains("yoga")) return "fa-dumbbell";
+        if (title.Contains("code") || title.Contains("dev") || title.Contains("web")) return "fa-laptop-code";
+        if (title.Contains("design") || title.Contains("art")) return "fa-palette";
+        return "fa-briefcase";
+    }
+}
+
+<div class="hero-section">
+    <div class="container">
+        <h1>Find the Perfect Service</h1>
+        <p>Connect with expert freelancers and local professionals for any job, any time.</p>
+        
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8">
+                <form asp-action="Index" method="get" class="card p-2 shadow-lg border-0">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0 ps-3">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" name="query" class="form-control border-0 form-control-lg shadow-none" placeholder="What service are you looking for? (e.g. Plumber, Tutor)" value="@Context.Request.Query["query"]">
+                        <select name="categoryId" class="form-select border-0 bg-light rounded-3 ms-2 d-none d-md-block" style="max-width: 200px;" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            @if (ViewBag.Categories != null)
+                            {
+                                foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category.CategoryId" selected="@(ViewBag.CurrentCategory == category.CategoryId ? "selected" : null)">@category.Name</option>
+                                }
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-lg px-4 rounded-3 ms-2">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-center gap-3 mt-4 text-white-50 small">
+            <span>Popular:</span>
+            <a href="?query=Cleaning" class="text-white text-decoration-underline">House Cleaning</a>
+            <a href="?query=Plumbing" class="text-white text-decoration-underline">Plumbing</a>
+            <a href="?query=English" class="text-white text-decoration-underline">English Tutor</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 fw-bold text-dark">Available Services</h2>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Sort by: @(ViewBag.CurrentSort == "price_asc" ? "Price: Low to High" : ViewBag.CurrentSort == "price_desc" ? "Price: High to Low" : "Newest Arrivals")
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="price_asc" asp-route-query="@ViewBag.CurrentQuery" asp-route-categoryId="@ViewBag.CurrentCategory">Price: Low to High</a></li>
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="price_desc" asp-route-query="@ViewBag.CurrentQuery" asp-route-categoryId="@ViewBag.CurrentCategory">Price: High to Low</a></li>
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="newest" asp-route-query="@ViewBag.CurrentQuery" asp-route-categoryId="@ViewBag.CurrentCategory">Newest Arrivals</a></li>
+            </ul>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <i class="fas fa-search fa-3x text-muted opacity-25"></i>
+            </div>
+            <h3 class="h5 text-muted">No services found</h3>
+            <p class="text-muted">Try adjusting your search terms or browse all categories.</p>
+            <a href="/" class="btn btn-outline-primary mt-2">Clear Search</a>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm hover-lift">
+                        <div class="position-relative">
+                            <!-- Image -->
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center text-white" style="height: 200px; background: @GetGradient(item.ServiceId);">
+                                    <i class="fas @GetIcon(item.Title) fa-4x opacity-75"></i>
+                                </div>
+                            }
+                            <span class="position-absolute top-0 end-0 m-3 badge bg-white text-dark shadow-sm">
+                                @item.Price.ToString("C")
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="avatar-sm rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold me-2" style="width: 24px; height: 24px; font-size: 0.75rem;">
+                                    P
+                                </div>
+                                <small class="text-muted">Provider</small>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">
+                                <a asp-action="Details" asp-route-id="@item.ServiceId" class="text-dark text-decoration-none stretched-link">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted small text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                @item.Description
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white border-0 pt-0 pb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-star text-warning"></i> 4.8 (12)
+                                </small>
+                                <span class="btn btn-sm btn-outline-primary rounded-pill">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,85 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\WEB\\Skillhub_Startup\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|e:\\web\\skillhub_startup\\repositories\\servicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|solutionrelative:repositories\\servicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|e:\\web\\skillhub_startup\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|solutionrelative:models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|e:\\web\\skillhub_startup\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|e:\\web\\skillhub_startup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17EB07A0-E9EE-132D-E2AB-99526E7919FC}|SkillHub.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServiceRepository.cs",
+              "DocumentMoniker": "E:\\WEB\\Skillhub_Startup\\Repositories\\ServiceRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\ServiceRepository.cs",
+              "ToolTip": "E:\\WEB\\Skillhub_Startup\\Repositories\\ServiceRepository.cs",
+              "RelativeToolTip": "Repositories\\ServiceRepository.cs",
+              "ViewState": "AgIAADYAAAAAVmZmZmbmvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:58:52.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "E:\\WEB\\Skillhub_Startup\\Models\\Booking.cs",
+              "RelativeDocumentMoniker": "Models\\Booking.cs",
+              "ToolTip": "E:\\WEB\\Skillhub_Startup\\Models\\Booking.cs",
+              "RelativeToolTip": "Models\\Booking.cs",
+              "ViewState": "AgIAAA0AAABwmZmZmZk5wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:58:46.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "E:\\WEB\\Skillhub_Startup\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "E:\\WEB\\Skillhub_Startup\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAB4AAACAaWZmZmYjwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:57:31.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\WEB\\Skillhub_Startup\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "E:\\WEB\\Skillhub_Startup\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T09:36:47.996Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

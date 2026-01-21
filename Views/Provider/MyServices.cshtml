@@ -1,0 +1,114 @@
+@model IEnumerable<SkillHub.Models.Service>
+@{
+    ViewData["Title"] = "My Services";
+
+    string GetGradient(int id) {
+        var gradients = new[] {
+            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            "linear-gradient(135deg, #2af598 0%, #009efd 100%)",
+            "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)",
+            "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+            "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
+            "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+            "linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)",
+            "linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
+        };
+        return gradients[id % gradients.Length];
+    }
+
+    string GetIcon(string title) {
+        if (string.IsNullOrEmpty(title)) return "fa-briefcase";
+        title = title.ToLower();
+        if (title.Contains("clean")) return "fa-broom";
+        if (title.Contains("electr")) return "fa-bolt";
+        if (title.Contains("plumb")) return "fa-faucet";
+        if (title.Contains("water")) return "fa-tint";
+        if (title.Contains("mech") || title.Contains("repair") || title.Contains("fix")) return "fa-wrench";
+        if (title.Contains("car") || title.Contains("auto")) return "fa-car";
+        if (title.Contains("garden") || title.Contains("lawn") || title.Contains("grass")) return "fa-leaf";
+        if (title.Contains("paint") || title.Contains("decor")) return "fa-paint-roller";
+        if (title.Contains("mov") || title.Contains("shift")) return "fa-truck";
+        if (title.Contains("teach") || title.Contains("tutor") || title.Contains("learn") || title.Contains("class")) return "fa-book-open";
+        if (title.Contains("photo") || title.Contains("camera")) return "fa-camera";
+        if (title.Contains("cook") || title.Contains("chef") || title.Contains("food")) return "fa-utensils";
+        if (title.Contains("beauty") || title.Contains("hair") || title.Contains("salon")) return "fa-spa";
+        if (title.Contains("fit") || title.Contains("gym") || title.Contains("yoga")) return "fa-dumbbell";
+        if (title.Contains("code") || title.Contains("dev") || title.Contains("web")) return "fa-laptop-code";
+        if (title.Contains("design") || title.Contains("art")) return "fa-palette";
+        return "fa-briefcase";
+    }
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1">My Services</h1>
+            <p class="text-muted">Manage the services you offer to customers.</p>
+        </div>
+        <a asp-action="CreateService" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Create New
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3">Service Title</th>
+                            <th class="py-3">Image</th>
+                            <th class="py-3">Description</th>
+                            <th class="py-3">Price</th>
+                            <th class="py-3 text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold text-primary">@item.Title</div>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="@item.ImageUrl" alt="@item.Title" class="rounded" style="width: 50px; height: 50px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <div class="rounded d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px; background: @GetGradient(item.ServiceId);">
+                                            <i class="fas @GetIcon(item.Title)"></i>
+                                        </div>
+                                    }
+                                </td>
+                                <td class="text-muted">
+                                    @if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 50)
+                                    {
+                                        @item.Description.Substring(0, 50) <span class="text-muted">...</span>
+                                    }
+                                    else
+                                    {
+                                        @item.Description
+                                    }
+                                </td>
+                                <td class="fw-bold">$@item.Price</td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group">
+                                        <a asp-action="EditService" asp-route-id="@item.ServiceId" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form asp-action="DeleteService" asp-route-id="@item.ServiceId" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Identity
+@using SkillHub.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav align-items-center ms-auto">
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    var isProvider = await UserManager.IsInRoleAsync(user, "Provider");
+    var isAdmin = await UserManager.IsInRoleAsync(user, "Admin");
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                <i class="fas fa-user"></i>
+            </div>
+            <span>@User.Identity?.Name</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg" aria-labelledby="userDropdown">
+            <li><h6 class="dropdown-header">Account</h6></li>
+            
+            @if (isProvider)
+            {
+                <li><a class="dropdown-item" asp-controller="Provider" asp-action="Dashboard"><i class="fas fa-tachometer-alt me-2 text-muted"></i>Provider Dashboard</a></li>
+            }
+            else if (isAdmin)
+            {
+                <li><a class="dropdown-item" asp-controller="Admin" asp-action="Dashboard"><i class="fas fa-shield-alt me-2 text-muted"></i>Admin Dashboard</a></li>
+            }
+            else
+            {
+                <li><a class="dropdown-item" asp-controller="Customer" asp-action="Dashboard"><i class="fas fa-user-circle me-2 text-muted"></i>My Dashboard</a></li>
+            }
+            
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="dropdown-item text-danger">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item me-2">
+        <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-primary rounded-pill px-4" asp-controller="Account" asp-action="Register">Get Started</a>
+    </li>
+}
+</ul>

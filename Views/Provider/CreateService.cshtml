@@ -1,0 +1,72 @@
+@model SkillHub.Models.Service
+@{
+    ViewData["Title"] = "Create Service";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-white border-0 text-center pt-4 pb-0">
+                    <div class="mb-3">
+                        <div class="d-inline-block bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
+                            <i class="fas fa-magic fa-2x"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-weight-light my-2">Create New Service</h3>
+                    <p class="text-muted small">Offer your expertise to the world</p>
+                </div>
+                <div class="card-body px-4 py-4">
+                    <form asp-action="CreateService" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label for="imageFile" class="form-label">Service Image</label>
+                            <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" />
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Title" class="form-control" id="inputTitle" placeholder="Service Title" />
+                            <label for="inputTitle">Service Title</label>
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Description" class="form-control" id="inputDescription" placeholder="Description" style="height: 100px"></textarea>
+                            <label for="inputDescription">Description</label>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Price" class="form-control" id="inputPrice" placeholder="Price" type="number" step="0.01" />
+                                    <label for="inputPrice">Price ($)</label>
+                                    <span asp-validation-for="Price" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="CategoryId" class="form-control" id="inputCategory" placeholder="Category" value="1" readonly />
+                                    <label for="inputCategory">Category ID</label>
+                                    <small class="text-muted d-block mt-1 ms-1">Auto-assigned</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-plus-circle me-2"></i>Create Service
+                            </button>
+                            <a asp-action="MyServices" class="btn btn-light btn-lg text-muted">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

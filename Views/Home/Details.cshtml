@@ -1,0 +1,179 @@
+@model SkillHub.Models.Service
+
+@{
+    ViewData["Title"] = Model.Title;
+
+    string GetGradient(int id) {
+        var gradients = new[] {
+            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            "linear-gradient(135deg, #2af598 0%, #009efd 100%)",
+            "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)",
+            "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+            "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
+            "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+            "linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)",
+            "linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
+        };
+        return gradients[id % gradients.Length];
+    }
+
+    string GetIcon(string title) {
+        if (string.IsNullOrEmpty(title)) return "fa-briefcase";
+        title = title.ToLower();
+        if (title.Contains("clean")) return "fa-broom";
+        if (title.Contains("electr")) return "fa-bolt";
+        if (title.Contains("plumb")) return "fa-faucet";
+        if (title.Contains("water")) return "fa-tint";
+        if (title.Contains("mech") || title.Contains("repair") || title.Contains("fix")) return "fa-wrench";
+        if (title.Contains("car") || title.Contains("auto")) return "fa-car";
+        if (title.Contains("garden") || title.Contains("lawn") || title.Contains("grass")) return "fa-leaf";
+        if (title.Contains("paint") || title.Contains("decor")) return "fa-paint-roller";
+        if (title.Contains("mov") || title.Contains("shift")) return "fa-truck";
+        if (title.Contains("teach") || title.Contains("tutor") || title.Contains("learn") || title.Contains("class")) return "fa-book-open";
+        if (title.Contains("photo") || title.Contains("camera")) return "fa-camera";
+        if (title.Contains("cook") || title.Contains("chef") || title.Contains("food")) return "fa-utensils";
+        if (title.Contains("beauty") || title.Contains("hair") || title.Contains("salon")) return "fa-spa";
+        if (title.Contains("fit") || title.Contains("gym") || title.Contains("yoga")) return "fa-dumbbell";
+        if (title.Contains("code") || title.Contains("dev") || title.Contains("web")) return "fa-laptop-code";
+        if (title.Contains("design") || title.Contains("art")) return "fa-palette";
+        return "fa-briefcase";
+    }
+}
+
+<div class="container py-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Services</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" class="card-img-top rounded-top" alt="@Model.Title" style="height: 400px; object-fit: cover;">
+                }
+                else
+                {
+                    <div class="d-flex align-items-center justify-content-center rounded-top text-white" style="height: 300px; background: @GetGradient(Model.ServiceId);">
+                        <i class="fas @GetIcon(Model.Title) fa-5x opacity-75"></i>
+                    </div>
+                }
+                <div class="card-body p-4">
+                    <h1 class="display-6 fw-bold mb-3">@Model.Title</h1>
+                    
+                    <div class="d-flex align-items-center gap-4 mb-4 text-muted small">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="fw-bold text-dark">4.9</span>
+                            <span>(24 reviews)</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Remote / Online</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-clock"></i>
+                            <span>Flexible Timing</span>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3">About this Service</h5>
+                    <p class="text-muted leading-relaxed">@Model.Description</p>
+                    
+                    <h5 class="fw-bold mt-5 mb-3">What's Included</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Professional Consultation</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i> High Quality Deliverables</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 2 Revisions included</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 24/7 Support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Reviews Section Placeholder -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Reviews</h4>
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span class="fw-bold text-muted">JD</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">John Doe</h6>
+                            <div class="text-warning small mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-muted small">Excellent service! Very professional and timely delivery. Highly recommended.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Booking Card -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="text-muted">Price</span>
+                        <h3 class="fw-bold text-primary mb-0">@Model.Price.ToString("C")</h3>
+                    </div>
+
+                    <div class="d-grid gap-3">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Customer"))
+                            {
+                                <a asp-controller="Booking" asp-action="Create" asp-route-serviceId="@Model.ServiceId" class="btn btn-primary btn-lg">
+                                    Book Now
+                                </a>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="far fa-heart me-2"></i> Save for Later
+                                </button>
+                            }
+                            else if (User.IsInRole("Provider"))
+                            {
+                                <div class="alert alert-warning text-center small">
+                                    Provider Account Detected
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info text-center small">
+                                    Admin View
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary btn-lg">
+                                Log in to Book
+                            </a>
+                            <small class="text-center text-muted">No account? <a asp-area="Identity" asp-page="/Account/Register">Sign up</a></small>
+                        }
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                            <i class="fas fa-user text-muted"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Service Provider</small>
+                            <span class="fw-bold">@Model.ProviderId</span> <!-- Ideally Name here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-center py-3">
+                    <small class="text-muted"><i class="fas fa-shield-alt me-1"></i> 100% Secure Payment</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
